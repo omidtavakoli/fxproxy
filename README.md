@@ -18,3 +18,12 @@ fxporxy code challenge is designed to demonstrate [sidecar pattern](https://docs
 * Follow Idiomatic Go
 * Design a loosely coupled and highly maintainable code
 * Since this service is expected to handle all traffic to pod/application service, code is expected to be fast and resilient
+
+
+##### To Run the test
+
+```
+
+go test
+
+```
