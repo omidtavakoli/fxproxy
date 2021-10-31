@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  sidecar:
+    container_name: sidecar
+    build: ./sidecar
+    image: sidecar
+    ports:
+      - "8080:8080"
+    networks:
+      - sidecar
+  app:
+    container_name: app
+    build: ./app
+    image: app
+    expose:
+      - "8081"
+    networks:
+      - sidecar
+
+networks:
+  sidecar:
+
+
+

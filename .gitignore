@@ -48,4 +48,5 @@ Thumbs.db
 *.mov
 *.wmv
 
-fxproxy
+sidecar/.idea
+app/.idea
