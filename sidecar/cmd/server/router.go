@@ -15,23 +15,35 @@ func SetupRouter(handler *rest.Handler, cfg *MainConfig) *gin.Engine {
 		c.JSON(http.StatusNotFound, "not found")
 	})
 
+	//single routes
 	r.GET("/health", handler.Health)
+	r.GET(":id", handler.Id)
 
-	v1 := r.Group("/v1")
+	//group routes
+	company := r.Group("/company")
+	{
+		company.GET("/", handler.Company)
+		company.GET("/:id", handler.CompanyId)
+		company.GET("/account", handler.CompanyId)
+	}
+
+	//sample auth on one of domains
 	if cfg.Server.AuthEnabled {
-		v1.Use(gin.BasicAuth(gin.Accounts{
+		company.Use(gin.BasicAuth(gin.Accounts{
 			cfg.Server.User: cfg.Server.Pass,
 		}))
 	}
 
+	account := r.Group("/account")
 	{
-		//v1.GET("/company/", handler.Company)
-		//v1.GET("/company/:id", handler.Search)
-		//v1.GET("/company/account", handler.Search)
-		//v1.GET("/account", handler.Search)
-		//v1.GET("/account/{id}", handler.Search)
-		//v1.GET("/{id}", handler.Search)
-		//v1.GET("/tenant/account/blocked", handler.Search)
+		account.GET("/:id/user", handler.Account)
+		account.GET("/:id", handler.AccountId)
+		account.GET("/", handler.Company)
+	}
+
+	tenant := r.Group("/tenant")
+	{
+		tenant.GET("/account/blocked", handler.Company)
 	}
 
 	var AllowedRoutes = make(map[string]bool, 0)
