@@ -11,3 +11,5 @@ LOGGER:
   DISABLE_STDOUT: false
 PROXY:
   DEFAULT_TTL: 43200
+APP:
+  URL: "http://app:8085"

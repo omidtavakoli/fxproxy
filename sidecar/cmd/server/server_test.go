@@ -46,9 +46,9 @@ func TestServer(t *testing.T) {
 			expectedStatusCode: http.StatusNotFound,
 		},
 		{
-			description:        "200 ok",
+			description:        "500 internal sever err",
 			url:                "%s/company",
-			expectedStatusCode: http.StatusOK,
+			expectedStatusCode: http.StatusInternalServerError, // we are testing this in build process
 		},
 		{
 			description:        "200 ok",

@@ -20,9 +20,9 @@ func SetupRouter(handler *rest.Handler, cfg *MainConfig) *gin.Engine {
 	r.GET(":id", handler.Id)
 
 	//group routes
+	r.GET("/company", handler.Company)
 	company := r.Group("/company")
 	{
-		company.GET("/", handler.Company)
 		company.GET("/:id", handler.CompanyId)
 		company.GET("/account", handler.CompanyId)
 	}
@@ -34,16 +34,16 @@ func SetupRouter(handler *rest.Handler, cfg *MainConfig) *gin.Engine {
 		}))
 	}
 
+	r.GET("/account", handler.Company)
 	account := r.Group("/account")
 	{
 		account.GET("/:id/user", handler.Account)
 		account.GET("/:id", handler.AccountId)
-		account.GET("/", handler.Company)
 	}
 
 	tenant := r.Group("/tenant")
 	{
-		tenant.GET("/account/blocked", handler.Company)
+		tenant.GET("/account/blocked", handler.Tenant)
 	}
 
 	var AllowedRoutes = make(map[string]bool, 0)

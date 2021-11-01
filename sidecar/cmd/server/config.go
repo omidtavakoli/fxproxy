@@ -6,6 +6,7 @@ import (
 	"os"
 	"sidecar/internal/logger"
 	"sidecar/internal/proxy"
+	"sidecar/pkg/app"
 )
 
 type ServerConfig struct {
@@ -19,6 +20,7 @@ type MainConfig struct {
 	Logger logger.Config `yaml:"LOGGER"`
 	Proxy  proxy.Config  `yaml:"PROXY"`
 	Server ServerConfig  `yaml:"SERVER"`
+	App    app.Config    `yaml:"APP"`
 }
 
 // LoadConfig loads configs form provided yaml file or overrides it with env variables

@@ -7,6 +7,7 @@ import (
 	"sidecar/internal/http/rest"
 	"sidecar/internal/logger"
 	"sidecar/internal/proxy"
+	"sidecar/pkg/app"
 	"sync"
 )
 
@@ -27,7 +28,13 @@ func NewServer(cfg *MainConfig, logger *logger.StandardLogger) *Server {
 // Initialize is responsible for app initialization and wrapping required dependencies
 func (s *Server) Initialize(ctx context.Context) error {
 	v := validator.New()
-	service := proxy.CreateService(&s.Config.Proxy, s.Logger, v)
+
+	appClient, err := app.NewClient(&s.Config.App, v)
+	if err != nil {
+		return err
+	}
+
+	service := proxy.CreateService(&s.Config.Proxy, appClient, s.Logger, v)
 	handler := rest.CreateHandler(service)
 	s.RESTHandler = handler
 	return nil
